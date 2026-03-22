@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+expense_tracker.db
+*.pyc
+*.pyo
+.env
+.DS_Store
+.claude/plans/
