@@ -1,1 +1,3 @@
-This project under development, please check back later.
+# Spendly - Expense Tracker
+
+This project is under development, please check back later.
