@@ -1,6 +1,6 @@
-def main():
-    print("Hello from expense-tracker!")
+# def main():
+#     print("Hello from expense-tracker!")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
