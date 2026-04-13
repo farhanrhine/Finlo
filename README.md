@@ -66,12 +66,12 @@ spendly/
 
 1. Install dependencies:
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 2. Run the application:
 ```bash
-python app.py
+uv run app.py
 ```
 
 3. Open your browser and navigate to `http://localhost:5000`
