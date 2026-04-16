@@ -1,10 +1,10 @@
-# Spendly - Expense Tracker
+# Finlo - Expense Tracker
 
 A modern web-based expense tracking application built with Flask, designed to help users manage their personal finances.
 
 ## Project Overview
 
-Spendly is a Flask-powered expense tracker that allows users to:
+Finlo is a Flask-powered expense tracker that allows users to:
 - Register and authenticate accounts
 - Track expenses with full CRUD operations (Create, Read, Update, Delete)
 - View expense dashboards with clean, responsive UI
@@ -45,7 +45,7 @@ The project is currently in development with the following features implemented:
 ## Project Structure
 
 ```
-spendly/
+finlo/
 ├── app.py              # Flask application routes and logic
 ├── main.py             # Application entry point
 ├── database/           # Database-related modules
