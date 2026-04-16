@@ -12,27 +12,7 @@ Finlo is a Flask-powered expense tracker that allows users to:
 
 ## Current Status
 
-The project is currently in development with the following features implemented:
-
-### ✅ Completed
-- **Flask Web Framework**: Basic routing and template rendering
-- **User Authentication System**: Login and registration forms
-- **Database Integration**: SQLite database with user storage
-- **Responsive UI**: Clean, modern interface using CSS Flexbox
-- **Template Structure**: Base layout with extendable blocks
-
-### 🔧 In Progress
-- Expense management functionality (add, edit, delete expenses)
-- User profile management
-- Expense categorization
-- Dashboard with expense summaries
-
-### 📋 Planned
-- Data visualization (charts/graphs)
-- Budget tracking features
-- Export functionality (CSV, PDF)
-- Multi-currency support
-- Mobile-responsive design
+The project is currently in development: 
 
 ## Tech Stack
 
@@ -102,10 +82,3 @@ uv run app.py
 - Database operations are handled through helper functions
 - Git workflow includes regular commits for feature branches
 
-## Contributing
-
-This is a learning project focused on understanding Flask development, database integration, and building web applications. All contributions should align with the project's educational goals.
-
-## License
-
-MIT License - feel free to use and modify for educational purposes.
