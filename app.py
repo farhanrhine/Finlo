@@ -30,6 +30,11 @@ def terms():
 def privacy():
     return render_template("privacy.html")
 
+
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
+
 # ------------------------------------------------------------------ #
 # Placeholder routes — students will implement these                  #
 # ------------------------------------------------------------------ #

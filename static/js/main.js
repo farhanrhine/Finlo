@@ -1,5 +1,38 @@
 // main.js — students will add JavaScript here as features are built
 
+// Settings Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsDropdown = document.getElementById('settings-dropdown');
+    
+    // Toggle settings dropdown
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', function() {
+            settingsDropdown.classList.toggle('active');
+        });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.settings-menu')) {
+            settingsDropdown.classList.remove('active');
+        }
+    });
+});
+
+// Theme Management (for initial page load)
+document.addEventListener('DOMContentLoaded', function() {
+    const htmlElement = document.documentElement;
+    
+    // Get saved theme preference or detect system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme ? savedTheme === 'dark' : systemPrefersDark;
+    
+    // Set initial theme
+    htmlElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+});
+
 // Video Modal Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const videoTrigger = document.getElementById('video-trigger');
