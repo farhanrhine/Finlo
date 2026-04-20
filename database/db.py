@@ -100,6 +100,17 @@ def get_user_by_email(email):
     return dict(result) if result else None
 
 
+def get_user_by_id(user_id):
+    """
+    Queries user by user_id from database
+    Returns user dict (id, name, email) or None if not found
+    """
+    db = get_db()
+    result = db.execute('SELECT id, name, email FROM users WHERE id = ?', (user_id,)).fetchone()
+    db.close()
+    return dict(result) if result else None
+
+
 def validate_user(email, password):
     """
     Validates email and password against database

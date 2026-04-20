@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from database.db import get_db, init_db, seed_db, create_user, validate_user
+from database.db import get_db, init_db, seed_db, create_user, validate_user, get_user_by_id
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-in-production'
@@ -17,11 +17,17 @@ with app.app_context():
 
 @app.route("/")
 def landing():
-    return render_template("landing.html")
+    user = None
+    if session.get('user_id'):
+        user = get_user_by_id(session['user_id'])
+    return render_template("landing.html", user=user)
 
 
 @app.route("/register")
 def register():
+    # Redirect already logged-in users away from register page
+    if session.get('user_id'):
+        return redirect(url_for('landing'))
     return render_template("register.html")
 
 
