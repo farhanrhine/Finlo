@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from database.db import get_db, init_db, seed_db, create_user
+from database.db import get_db, init_db, seed_db, create_user, validate_user
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-in-production'
@@ -50,7 +50,28 @@ def register_post():
 
 @app.route("/login")
 def login():
+    # Redirect already logged-in users away from login page
+    if session.get('user_id'):
+        return redirect(url_for('landing'))
     return render_template("login.html")
+
+
+@app.route("/login", methods=["POST"])
+def login_post():
+    """
+    Handles login form submission
+    Validates email and password, sets session, redirects to landing
+    """
+    email = request.form.get('email', '').strip()
+    password = request.form.get('password', '').strip()
+    
+    user_id = validate_user(email, password)
+    
+    if user_id:
+        session['user_id'] = user_id
+        return redirect(url_for('landing'))
+    else:
+        return render_template("login.html", error="Invalid email or password")
 
 
 @app.route("/terms")
@@ -70,9 +91,13 @@ def settings():
 # Placeholder routes — students will implement these                  #
 # ------------------------------------------------------------------ #
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
-    return "Logout — coming in Step 3"
+    """
+    Handles logout — clears session and redirects to landing page
+    """
+    session.clear()
+    return redirect(url_for('landing'))
 
 
 @app.route("/profile")
