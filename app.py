@@ -108,7 +108,54 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    """
+    Displays user profile page with hardcoded static data.
+    Only accessible to authenticated users.
+    """
+    # Authentication guard
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('login'))
+    
+    # Hardcoded context data
+    context = {
+        # User info card
+        'user': {
+            'name': 'John Doe',
+            'email': 'john@example.com',
+            'member_since': 'January 2024',
+            'initials': 'JD'
+        },
+        
+        # Summary stats
+        'stats': {
+            'total_spent': '$1,245.50',
+            'transaction_count': 18,
+            'top_category': 'Food'
+        },
+        
+        # Transaction history (hardcoded rows)
+        'transactions': [
+            {'date': '2024-04-20', 'description': 'Grocery shopping', 'category': 'Food', 'amount': '$45.99'},
+            {'date': '2024-04-19', 'description': 'Gas fill-up', 'category': 'Transport', 'amount': '$52.30'},
+            {'date': '2024-04-18', 'description': 'Movie tickets', 'category': 'Entertainment', 'amount': '$28.00'},
+            {'date': '2024-04-17', 'description': 'Electric bill', 'category': 'Bills', 'amount': '$89.50'},
+            {'date': '2024-04-16', 'description': 'Pharmacy', 'category': 'Health', 'amount': '$15.75'},
+        ],
+        
+        # Category breakdown (hardcoded totals)
+        'categories': [
+            {'name': 'Food', 'total': '$385.20', 'percentage': 31},
+            {'name': 'Transport', 'total': '$210.80', 'percentage': 17},
+            {'name': 'Bills', 'total': '$298.50', 'percentage': 24},
+            {'name': 'Health', 'total': '$85.00', 'percentage': 7},
+            {'name': 'Entertainment', 'total': '$140.00', 'percentage': 11},
+            {'name': 'Shopping', 'total': '$95.00', 'percentage': 8},
+            {'name': 'Other', 'total': '$31.00', 'percentage': 2},
+        ]
+    }
+    
+    return render_template('profile.html', **context)
 
 
 @app.route("/expenses/add")
