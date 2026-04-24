@@ -108,7 +108,54 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    """
+    Displays user profile page with hardcoded static data.
+    Only accessible to authenticated users.
+    """
+    # Authentication guard
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('login'))
+    
+    # Hardcoded context data
+    context = {
+        # User info card
+        'user': {
+            'name': 'Sarah',
+            'email': 'sarah@example.com',
+            'member_since': 'April 2026',
+            'initials': 'S'
+        },
+        
+        # Summary stats
+        'stats': {
+            'total_spent': '₹58,245.50',
+            'transaction_count': 18,
+            'top_category': 'Food'
+        },
+        
+        # Transaction history (hardcoded rows)
+        'transactions': [
+            {'date': '2026-04-20', 'description': 'Grocery shopping', 'category': 'Food', 'amount': '₹2,145.99'},
+            {'date': '2026-04-19', 'description': 'Gas fill-up', 'category': 'Transport', 'amount': '₹2,152.30'},
+            {'date': '2026-04-18', 'description': 'Movie tickets', 'category': 'Entertainment', 'amount': '₹1,280.00'},
+            {'date': '2026-04-17', 'description': 'Electric bill', 'category': 'Bills', 'amount': '₹4,189.50'},
+            {'date': '2026-04-16', 'description': 'Pharmacy', 'category': 'Health', 'amount': '₹1,215.75'},
+        ],
+        
+        # Category breakdown (hardcoded totals)
+        'categories': [
+            {'name': 'Food', 'total': '₹18,385.20', 'percentage': 31},
+            {'name': 'Transport', 'total': '₹9,910.80', 'percentage': 17},
+            {'name': 'Bills', 'total': '₹13,998.50', 'percentage': 24},
+            {'name': 'Health', 'total': '₹4,085.00', 'percentage': 7},
+            {'name': 'Entertainment', 'total': '₹6,440.00', 'percentage': 11},
+            {'name': 'Shopping', 'total': '₹4,495.00', 'percentage': 8},
+            {'name': 'Other', 'total': '₹1,431.00', 'percentage': 2},
+        ]
+    }
+    
+    return render_template('profile.html', **context)
 
 
 @app.route("/expenses/add")
