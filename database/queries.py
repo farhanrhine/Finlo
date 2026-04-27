@@ -26,7 +26,12 @@ def get_user_by_id(user_id):
         if result:
             user = dict(result)
             # Format date as "Month YYYY" (e.g., "April 2026")
-            created_date = datetime.strptime(user['created_at'], '%Y-%m-%d')
+            # Handle both full datetime (with time) and date-only formats
+            created_str = user['created_at']
+            if ' ' in created_str:
+                # Has timestamp, take only the date part
+                created_str = created_str.split(' ')[0]
+            created_date = datetime.strptime(created_str, '%Y-%m-%d')
             user['member_since'] = created_date.strftime('%B %Y')
             return user
         return None
