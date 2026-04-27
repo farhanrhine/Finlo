@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from database.db import get_db, init_db, seed_db, create_user, validate_user, get_user_by_id
+from database.queries import get_user_by_id as get_user_details, get_summary_stats, get_recent_transactions, get_category_breakdown
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-in-production'
@@ -109,7 +110,7 @@ def logout():
 @app.route("/profile")
 def profile():
     """
-    Displays user profile page with hardcoded static data.
+    Displays user profile page with dynamic data from database.
     Only accessible to authenticated users.
     """
     # Authentication guard
@@ -117,42 +118,35 @@ def profile():
     if not user_id:
         return redirect(url_for('login'))
     
-    # Hardcoded context data
+    # Fetch dynamic data from database
+    user = get_user_details(user_id)
+    if not user:
+        return redirect(url_for('login'))
+    
+    # Add initials
+    user['initials'] = ''.join(word[0].upper() for word in user['name'].split())
+    
+    # Fetch stats
+    stats = get_summary_stats(user_id)
+    # Format total_spent with ₹ symbol
+    if stats['total_spent'] > 0:
+        stats['total_spent'] = f"₹{stats['total_spent']:.2f}"
+    else:
+        stats['total_spent'] = "₹0.00"
+    
+    # Fetch transactions and format amounts
+    transactions = get_recent_transactions(user_id, limit=10)
+    for txn in transactions:
+        txn['amount'] = f"₹{txn['amount']:.2f}"
+    
+    # Fetch category breakdown
+    categories = get_category_breakdown(user_id)
+    
     context = {
-        # User info card
-        'user': {
-            'name': 'Sarah',
-            'email': 'sarah@example.com',
-            'member_since': 'April 2026',
-            'initials': 'S'
-        },
-        
-        # Summary stats
-        'stats': {
-            'total_spent': '₹58,245.50',
-            'transaction_count': 18,
-            'top_category': 'Food'
-        },
-        
-        # Transaction history (hardcoded rows)
-        'transactions': [
-            {'date': '2026-04-20', 'description': 'Grocery shopping', 'category': 'Food', 'amount': '₹2,145.99'},
-            {'date': '2026-04-19', 'description': 'Gas fill-up', 'category': 'Transport', 'amount': '₹2,152.30'},
-            {'date': '2026-04-18', 'description': 'Movie tickets', 'category': 'Entertainment', 'amount': '₹1,280.00'},
-            {'date': '2026-04-17', 'description': 'Electric bill', 'category': 'Bills', 'amount': '₹4,189.50'},
-            {'date': '2026-04-16', 'description': 'Pharmacy', 'category': 'Health', 'amount': '₹1,215.75'},
-        ],
-        
-        # Category breakdown (hardcoded totals)
-        'categories': [
-            {'name': 'Food', 'total': '₹18,385.20', 'percentage': 31},
-            {'name': 'Transport', 'total': '₹9,910.80', 'percentage': 17},
-            {'name': 'Bills', 'total': '₹13,998.50', 'percentage': 24},
-            {'name': 'Health', 'total': '₹4,085.00', 'percentage': 7},
-            {'name': 'Entertainment', 'total': '₹6,440.00', 'percentage': 11},
-            {'name': 'Shopping', 'total': '₹4,495.00', 'percentage': 8},
-            {'name': 'Other', 'total': '₹1,431.00', 'percentage': 2},
-        ]
+        'user': user,
+        'stats': stats,
+        'transactions': transactions,
+        'categories': categories
     }
     
     return render_template('profile.html', **context)
