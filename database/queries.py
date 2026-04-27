@@ -86,7 +86,7 @@ def get_recent_transactions(user_id, limit=10):
             '''SELECT date, description, category, amount
             FROM expenses
             WHERE user_id = ?
-            ORDER BY created_at DESC
+            ORDER BY date DESC
             LIMIT ?''',
             (user_id, limit)
         ).fetchall()
