@@ -2,12 +2,7 @@ import sqlite3
 from datetime import datetime
 
 
-def get_db():
-    """Reuse the existing get_db function from db.py"""
-    conn = sqlite3.connect('Finlo.db')
-    conn.row_factory = sqlite3.Row
-    conn.execute('PRAGMA foreign_keys = ON;')
-    return conn
+from database.db import get_db
 
 
 def _close_db(conn):
