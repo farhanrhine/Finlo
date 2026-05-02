@@ -118,6 +118,10 @@ def profile():
     if not user_id:
         return redirect(url_for('login'))
     
+    # Get date filters from query parameters
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    
     # Fetch dynamic data from database
     user = get_user_details(user_id)
     if not user:
@@ -126,27 +130,29 @@ def profile():
     # Add initials
     user['initials'] = ''.join(word[0].upper() for word in user['name'].split())
     
-    # Fetch stats
-    stats = get_summary_stats(user_id)
+    # Fetch stats with optional filters
+    stats = get_summary_stats(user_id, start_date=start_date, end_date=end_date)
     # Format total_spent with ₹ symbol
     if stats['total_spent'] > 0:
         stats['total_spent'] = f"₹{stats['total_spent']:.2f}"
     else:
         stats['total_spent'] = "₹0.00"
     
-    # Fetch transactions and format amounts
-    transactions = get_recent_transactions(user_id, limit=10)
+    # Fetch transactions and format amounts with optional filters
+    transactions = get_recent_transactions(user_id, limit=10, start_date=start_date, end_date=end_date)
     for txn in transactions:
         txn['amount'] = f"₹{txn['amount']:.2f}"
     
-    # Fetch category breakdown
-    categories = get_category_breakdown(user_id)
+    # Fetch category breakdown with optional filters
+    categories = get_category_breakdown(user_id, start_date=start_date, end_date=end_date)
     
     context = {
         'user': user,
         'stats': stats,
         'transactions': transactions,
-        'categories': categories
+        'categories': categories,
+        'start_date': start_date,
+        'end_date': end_date
     }
     
     return render_template('profile.html', **context)
