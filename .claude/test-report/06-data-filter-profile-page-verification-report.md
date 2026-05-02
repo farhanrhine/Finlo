@@ -31,6 +31,8 @@
 ### Warnings & Architecture Flags
 *   **Infrastructure Improvement**: Modified `database/db.py` to support configurable database paths via `app.config['DATABASE']`. This enables isolated testing using temporary files, avoiding interference with the production `Finlo.db`.
 *   **Code Consolidation**: Refactored `database/queries.py` to import `get_db` from `database/db.py` instead of re-implementing it, improving maintainability.
+*   **Security Posture**: Implemented `validate_date` helper in `app.py` to ensure only valid YYYY-MM-DD strings are processed by the database layer.
+*   **Refactored Display Logic**: Cleaned up the `profile()` route by separating raw data fetching from display formatting, following the "Senior Developer" patterns suggested during the quality review.
 
 ---
 
