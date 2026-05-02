@@ -51,7 +51,6 @@ finlo/
 │   ├── __init__.py
 │   ├── db.py               # SQLite helpers and database operations
 │   └── queries.py          # Reusable database query functions
-├── docs/                   # Documentation and learning materials
 ├── templates/              # Jinja2 HTML templates
 │   ├── base.html           # Master layout template (base for all pages)
 │   ├── landing.html        # Homepage
