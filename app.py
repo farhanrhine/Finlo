@@ -222,16 +222,17 @@ def add_expense():
     if not user_id:
         return redirect(url_for('login'))
     
-    # Generate CSRF token
+    # Generate CSRF token if not already in session
     import secrets
-    csrf_token = secrets.token_hex(16)
-    session['csrf_token'] = csrf_token
+    if 'csrf_token' not in session:
+        session['csrf_token'] = secrets.token_hex(16)
+    csrf_token = session.get('csrf_token')
     
     # Categories list
     categories = ['Food', 'Transport', 'Bills', 'Health', 'Entertainment', 'Other']
     default_date = datetime.now().strftime('%Y-%m-%d')
     
-    return render_template('add_expense.html', categories=categories, default_date=default_date)
+    return render_template('add_expense.html', categories=categories, default_date=default_date, csrf_token=csrf_token)
 
 
 @app.route("/expenses/add", methods=["POST"])
