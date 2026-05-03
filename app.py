@@ -1,10 +1,11 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime
 from database.db import get_db, init_db, seed_db, create_user, validate_user, get_user_by_id
 from database.queries import get_user_by_id as get_user_details, get_summary_stats, get_recent_transactions, get_category_breakdown, create_expense
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-change-in-production'
+app.secret_key = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
 
 
 # Initialize database on startup
@@ -221,6 +222,11 @@ def add_expense():
     if not user_id:
         return redirect(url_for('login'))
     
+    # Generate CSRF token
+    import secrets
+    csrf_token = secrets.token_hex(16)
+    session['csrf_token'] = csrf_token
+    
     # Categories list
     categories = ['Food', 'Transport', 'Bills', 'Health', 'Entertainment', 'Other']
     default_date = datetime.now().strftime('%Y-%m-%d')
@@ -238,6 +244,17 @@ def add_expense_post():
     user_id = session.get('user_id')
     if not user_id:
         return redirect(url_for('login'))
+    
+    # CSRF token validation
+    csrf_token = request.form.get('csrf_token', '')
+    session_token = session.get('csrf_token', '')
+    if not csrf_token or csrf_token != session_token:
+        categories = ['Food', 'Transport', 'Bills', 'Health', 'Entertainment', 'Other']
+        default_date = datetime.now().strftime('%Y-%m-%d')
+        return render_template('add_expense.html',
+                             categories=categories,
+                             default_date=default_date,
+                             error='Security token expired. Please refresh and try again.')
     
     # Extract form data
     amount = request.form.get('amount', '').strip()

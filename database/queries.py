@@ -196,10 +196,21 @@ def create_expense(user_id, amount, category, date, description=None):
     if not category or category not in ALLOWED_CATEGORIES:
         raise ValueError("Invalid category selected")
     
-    # Validate date format and validity
+    # Validate date format and validity with bounds checking
     try:
-        datetime.strptime(date, '%Y-%m-%d')
-    except (ValueError, TypeError):
+        date_obj = datetime.strptime(date, '%Y-%m-%d')
+        # Validate date is within reasonable bounds (2000 to today)
+        min_date = datetime.strptime('2000-01-01', '%Y-%m-%d')
+        today = datetime.now()
+        if date_obj < min_date:
+            raise ValueError("Date cannot be before January 1, 2000")
+        if date_obj > today:
+            raise ValueError("Date cannot be in the future")
+    except ValueError as e:
+        if "Date cannot be" in str(e):
+            raise
+        raise ValueError("Invalid date format")
+    except TypeError:
         raise ValueError("Invalid date format")
     
     # Insert expense into database
