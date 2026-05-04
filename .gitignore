@@ -15,4 +15,8 @@ expense_tracker.db
 .DS_Store
 docs/
 
+# Encryption keys (NEVER commit)
+.encryption.key
+.encrypted_files.json
+
 
