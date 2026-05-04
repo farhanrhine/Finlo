@@ -13,6 +13,8 @@ This guide explains how to encrypt sensitive folders in your Git repositories so
 - Your `.encryption.key` must NEVER be shared in documentation
 - Always use PLACEHOLDER examples (like `YOUR-SECRET-KEY-HERE`) in guides
 - Store your real key in a **password manager** (1Password, Bitwarden, LastPass)
+- # The new key is already in .encryption.key
+`cat .encryption.key`
 
 ---
 
