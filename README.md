@@ -120,6 +120,11 @@ git push origin main
 ### First Time Setup (Fresh Clone)
 
 ```bash
+# 0. Get the encryption key (required!)
+# Copy your .encryption.key file to the project root
+# (Ask the key owner to share it via password manager)
+cp /path/to/.encryption.key .
+
 # 1. Extract (decrypt docs folder)
 uv run archive_docs.py extract
 
