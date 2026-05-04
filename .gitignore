@@ -9,6 +9,7 @@ wheels/
 # Virtual environments
 .venv
 expense_tracker.db
+Finlo.db
 *.pyc
 *.pyo
 .env
