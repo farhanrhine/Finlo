@@ -436,6 +436,43 @@ git push
 
 ---
 
+## Key Rotation (Changing Your Key)
+
+If you want to change your encryption key (for security or any other reason):
+
+### **Steps to Rotate Key:**
+
+```bash
+# 1️⃣ Generate new encryption key
+uv run encrypt_docs.py genkey
+# ⚠️ Save this new key safely!
+
+# 2️⃣ Decrypt docs with old key
+uv run archive_docs.py extract
+# ✅ docs/ folder appears
+
+# 3️⃣ Re-encrypt with new key
+uv run archive_docs.py create
+# ✅ New encrypted archive created
+
+# 4️⃣ Commit and push
+git add docs.tar.gz.encrypted
+git commit -m "Rotate encryption key"
+git push origin main
+```
+
+### **What Changed:**
+
+| Before | After |
+|--------|-------|
+| `.encryption.key` (old) | `.encryption.key` (new) |
+| `docs.tar.gz.encrypted` (encrypted with old key) | `docs.tar.gz.encrypted` (encrypted with new key) |
+| Old key decrypts archive | Old key NO LONGER works |
+
+**Result**: Only new key can decrypt the archive! Old key is now useless. 🔄
+
+---
+
 ## Example Workflow
 
 ```bash
