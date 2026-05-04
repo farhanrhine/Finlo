@@ -14,6 +14,7 @@ expense_tracker.db
 .env
 .DS_Store
 docs/
+docs.tar.gz
 
 # Encryption keys (NEVER commit)
 .encryption.key
