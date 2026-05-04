@@ -124,7 +124,7 @@ git push origin main
 uv run archive_docs.py extract
 
 # 2. Edit files as needed
-nano docs/PLAN/note.md
+# Open and edit any files in docs/ using your editor
 
 # 3. Re-encrypt when done
 uv run archive_docs.py create
