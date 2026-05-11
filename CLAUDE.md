@@ -1,8 +1,18 @@
 # CLAUDE.md
 
+## Developer Info
+
+**Name:** Farhan  
+**GitHub:** [@farhanrhine](https://github.com/farhanrhine)  
+**Project:** Finlo - Personal Expense Tracker  
+
+Farhan uses both Claude Code and Pi for development. Use friendly, conversational tone. Offer proactive suggestions and explain design decisions clearly.
+
+---
+
 ## Project Overview
 
-This file provides guidance to Claude Code when working with **Finlo**, a personal expense tracker built with Flask and SQLite.
+This file provides guidance to Claude Code and Pi when working with **Finlo**, a personal expense tracker built with Flask and SQLite.
 
 **Status**: Under active development. See README.md for project status and implemented features.
 
@@ -99,8 +109,8 @@ uv run app.py
 # Stage all changes (use cautiously with large modifications)
 git add .
 
-# Commit changes with Claude as co-author (recommended)
-git commit -m $'your message\n\nCo-Authored-By: Claude <claude@anthropic.com>'
+# Commit changes with Claude and Pi as co-authors (recommended)
+git commit -m $'your message\n\nCo-Authored-By: Claude <claude@anthropic.com>\nCo-Authored-By: Pi <pi@earendil-works.com>'
 
 # Push to feature branch
 git push origin feature/<branch_name>
