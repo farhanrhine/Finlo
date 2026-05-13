@@ -132,5 +132,5 @@ if __name__ == "__main__":
     count = 30
     months = 6
     
-    print(f"🌱 Seeding {count} expenses for user_id {user_id} across {months} months...\n")
+    print(f"[Seed] Seeding {count} expenses for user_id {user_id} across {months} months...\n")
     seed_expenses(user_id, count, months)
