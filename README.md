@@ -100,6 +100,11 @@ uv run app.py
 
 3. Open your browser and navigate to `http://localhost:5000`
 
+4. **Demo Account** (pre-seeded):
+   - Email: `demo@Finlo.com`
+   - Password: `demo123`
+   - Includes 8 sample expenses across different categories for testing
+
 ## Encrypted Docs Folder
 
 The `docs/` folder is **encrypted and stored as `docs.tar.gz.encrypted`** on GitHub. Only the encryption key holder can decrypt and read the contents.
